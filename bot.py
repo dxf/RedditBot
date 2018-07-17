@@ -15,7 +15,7 @@ client = discord.Client()
 async def on_ready():
     print('We up, ready and logged in as...')
     print(client.user.name,' ',client.user.id)
-    client.change_presence(*, game='r!help | daf.lol/redditbot')
+    await client.change_presence(game=discord.Game(name='r!help | rb.daf.lol'))
 @client.event
 async def on_message(message):
     if message.content.startswith('r!help'):
