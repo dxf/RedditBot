@@ -43,7 +43,7 @@ async def on_message(message):
                             response = http.request('GET',finalurl)
                             thedata = response.data
                             parsedjson = json.loads(thedata)
-							encode = parsedjson.decode("utf-8")
+                            decode = parsedjson.decode('utf-8')
                             img = encode[0]['data']['children'][0]['data']['url']
                             if img.endswith('.png') or img.endswith('.jpg') or img.endswith('.gif'):
                                 await client.send_message(message.channel, img)
