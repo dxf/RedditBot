@@ -41,7 +41,7 @@ async def on_message(message):
                         finalurl = urlpartone + urlparttwo + urlpartthree
                         while True:
                             response = http.request('GET',finalurl)
-                            thedata = response.data
+                            thedata = response.data.read()
                             parsedjson = json.loads(thedata).decode()
                             img = parsedjson[0]['data']['children'][0]['data']['url']
                             if img.endswith('.png') or img.endswith('.jpg') or img.endswith('.gif'):
