@@ -33,7 +33,7 @@ async def on_message(message):
                     tocheck = urlpartone + urlparttwo + checkerurl
                     response = http.request('GET',tocheck)
                     checkdata = response.data
-                    parsecheck = json.loads(	checkdata)
+                    parsecheck = json.loads(	checkdata).decode()
                     if parsecheck['data']['dist'] == 0:
                         await client.send_message(message.channel, 'Invalid sub!')
                         return
