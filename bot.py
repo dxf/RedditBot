@@ -33,7 +33,7 @@ async def on_message(message):
                     tocheck = urlpartone + urlparttwo + checkerurl
                     response = http.request('GET',tocheck)
                     checkdata = response.data
-                    parsecheck = json.loads(	response.body.decode('utf-8'))
+                    parsecheck = json.loads(	checkdata)
                     if parsecheck['data']['dist'] == 0:
                         await client.send_message(message.channel, 'Invalid sub!')
                         return
@@ -42,7 +42,7 @@ async def on_message(message):
                         while True:
                             response = http.request('GET',finalurl)
                             thedata = response.data
-                            parsedjson = json.loads(thedata)
+                            parsedjson = json.loads(response)
                             img = parsedjson[0]['data']['children'][0]['data']['url']
                             if img.endswith('.png') or img.endswith('.jpg') or img.endswith('.gif'):
                                 await client.send_message(message.channel, img)
