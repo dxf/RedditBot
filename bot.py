@@ -33,29 +33,26 @@ async def on_message(message):
                     tocheck = urlpartone + urlparttwo + checkerurl
                     response = http.request('GET',tocheck)
                     checkdata = response.data
-                    parsecheck = json.loads(	checkdata).decode()
+                    parsecheck = json.loads(checkdata)
                     if parsecheck['data']['dist'] == 0:
                         await client.send_message(message.channel, 'Invalid sub!')
                         return
-                    else:
-                        finalurl = urlpartone + urlparttwo + urlpartthree
-                        while True:
-                            response = http.request('GET',finalurl)
-                            thedata = response.data.read()
-                            parsedjson = json.loads(thedata).decode()
-                            img = parsedjson[0]['data']['children'][0]['data']['url']
-                            if img.endswith('.png') or img.endswith('.jpg') or img.endswith('.gif'):
-                                await client.send_message(message.channel, img)
-                                return
-                            else:
-                                print('Not an image')
-                                global counter
-                                counter += 1
-                            if counter == 11:
-                                    await client.send_message(message.channel, 'Failed to get image after 10 tries. If you\'re sure there are images, try again. Bad luck!')
-                                    return
-
-                
+                    finalurl = urlpartone + urlparttwo + urlpartthree
+                    while True:
+                        response = http.request('GET',finalurl)
+                        parsedjson = json.loads(response.data.decode('utf-8'))
+                        img = parsedjson[0]['data']['children'][0]['data']['url']
+                        if img.endswith('.png') or img.endswith('.jpg') or img.endswith('.gif'):
+                            await client.send_message(message.channel, img)
+                            return
+                        else: 
+                            global counter
+                            counter += 1
+                        if counter == 11:
+                            await client.send_message(message.channel, 'Failed to get image after 10 tries. If you\'re sure there are images, try again. Bad luck!')
+                            return
+                        await client.send_message(message.channel, 'Incorrect syntax. use `r!get subreddit`')
+                        return 
         else:
             await client.send_message(message.channel, 'Incorrect syntax. use `r!get subreddit`')
             return
